@@ -425,7 +425,7 @@
     "ellipsis": {
       "Package": "ellipsis",
       "Version": "0.3.1",
- n     "Source": "Repository",
+      "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "fd2844b3a43ae2d27e70ece2df1b4e2a"
     },

@@ -114,17 +114,17 @@ RUN conda config --set always_yes yes --set changeps1 no && \
 # ENV CONDA_PREFIX ${HOME}/conda/envs/container_env
 ################################################################################
 
-
 ############################ Setup: R packages #################################
-RUN mkdir ${HOME}/tmp/renv && \
-    echo 'source("renv/activate.R")' > ${HOME}/tmp/run.R && \
-    echo 'renv::restore()' >> ${HOME}/tmp/run.R
+USER root
+RUN R -e 'install.packages(c("renv"), lib="/usr/local/lib/R/site-library")' 
+USER ${NB_USER}
 
 # copy renv information from local directory
 COPY renv.lock ${HOME}/tmp/renv.lock
 COPY renv/activate.R ${HOME}/tmp/renv/activate.R
 
-RUN Rscript ${HOME}/tmp/run.R
+RUN R -e '.libPaths();library(renv);renv::restore()' 
+
 ################################################################################
 
 
