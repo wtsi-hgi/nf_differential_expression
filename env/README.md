@@ -1,5 +1,11 @@
-
+c
 # Notes
+
+auto-builds in docckerhub:
+https://hub.docker.com/repository/docker/wtsihgi/nf_differential_expression/general
+pull with 
+docker pull wtsihgi/nf_differential_expression:latest
+singularity pull docker://wtsihgi/nf_differential_expression:latest
 
 ## General
 
