@@ -1,0 +1,80 @@
+experiment_key_column:
+    description: 'Column used to group samples to make pseudobulk.'
+    value: 'experiment_id'
+anndata_cell_label:
+    description: 'Anndata cell label column in obs slot.'
+    value: 'cluster'
+differential_expression:
+    run_process: true
+    models:
+        description: 'List of differential formula and params.
+            All covariates in formula should be listed in either
+                variable_continuous or variable_discrete.'
+        mean_cp10k_filter: 1
+        value:
+            - method: 'mast::singlecell::bayesglm'
+              formula: '~ sex'
+              variable_target: 'sex'
+              variable_continuous: ''
+              variable_discrete: ''
+              variable_discrete_level: ''
+            - method: 'edger::singlecell::glmQLFit'
+              formula: '~ disease + sex + age + lane'
+              variable_target: 'disease'
+              variable_continuous: 'age'
+              variable_discrete: 'sex,lane'
+              variable_discrete_level: 'disease::healthy,pret1d,t1d;;sex::M,F'
+            - method: 'deseq::pseudobulk::glmGamPoi'
+              formula: '~ sex + disease + age + lane + disease:sex'
+              variable_target: 'disease:sex'
+              variable_continuous: 'age'
+              variable_discrete: 'sex,lane'
+              variable_discrete_level: 'disease::healthy,pret1d,t1d;;sex::M,F'
+    de_merge_config:
+        ihw_correction:
+            run_process: true
+            description: 'Run IHW to correct differential expression results.'
+            value:
+                covariates: 'cell_label,coef_value'
+                alpha: 0.1
+    de_plot_config:
+        mean_expression_filter:
+            description: 'For comparison plots, drop genes whose mean
+                expression for a group in anndata_cell_label is < this value.
+                Example: if gene A expression is 0 counts in cluster 1 and 10
+                in cluster 2, it will be dropped from cluster 1 but not cluster
+                2.'
+            value:
+                - 0.0
+                - 0.25
+    fgsea_config:
+        run_process: true
+        description: 'Parameters to run fGSEA.'
+        sample_size: 101
+        score_type: 'std'
+        value:
+            - min_set_size: 1
+              max_set_size: Inf
+              eps: 0
+              database: 'c2.cp.reactome,c2.cp.kegg,c5.bp,c5.cc,c5.mf'
+    idea_config:
+        run_process: true
+        description: 'Parameters to run iDEA.'
+        max_beta_variance: 100
+        min_cover_rate: 0.0025
+        value:
+            - beta: ''
+              tau: '(-2,0.5)'
+              em_iteration: 15
+              mcmc_iteration: 1000
+              fit_tolerance: 0.00001
+              fdr_n_permutations: 10
+              database: 'c2.cp.kegg'
+variance_decomposition:
+    run_process: true
+    vardecomp_method:
+        run_process: true
+    covariates:
+        description: 'List of covariates to be decomposed.'
+        value: 'sex,age,smoking_status,disease_status,experimentalist,sanger_sample_id,cluster,total_counts,total_genes_detected,id_run,lane,bead_version,bead_lot,chip_version,chip_lot'
+        # value: 'sex,age'
