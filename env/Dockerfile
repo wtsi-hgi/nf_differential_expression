@@ -117,8 +117,9 @@ RUN conda config --set always_yes yes --set changeps1 no && \
 
 ############################ Setup: R packages #################################
 RUN mkdir ${HOME}/tmp/renv && \
-    echo 'source("renv/activate.R")' > ${HOME}/tmp/run.R && \
     echo 'renv::restore()' >> ${HOME}/tmp/run.R
+    ## echo 'source("renv/activate.R")' > ${HOME}/tmp/run.R && \
+    ## =echo 'renv::restore()' >> ${HOME}/tmp/run.R
 
 # copy renv information from local directory
 COPY renv.lock ${HOME}/tmp/renv.lock
