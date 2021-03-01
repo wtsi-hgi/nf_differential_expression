@@ -1,0 +1,8 @@
+renv::install(c('bioc::optparse','bioc::tidyverse','bioc::scales','bioc::ggrepel','bioc::Matrix','bioc::BiocManager','bioc::DESeq2','bioc::glmGamPoi','bioc::edgeR','bioc::limma','bioc::MAST','bioc::IHW','bioc::fgsea','bioc::BH'))
+
+IHW ## install instructions: http://bioconductor.org/packages/release/bioc/html/IHW.html
+xzhoulab/iDEA ## Github install instructions: https://github.com/xzhoulab/iDEA
+ggrepel
+fGSEA ## Bioconductor -- https://bioconductor.org/packages/release/bioc/html/fgsea.html
+DESeq2 ## Need github version to get glmGamPoi: devtools::install_github("mikelove/DESeq2")
+glmGamPoi ## Need github version: devtools::install_github("const-ae/glmGamPoi")
