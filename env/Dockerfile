@@ -117,6 +117,7 @@ RUN conda config --set always_yes yes --set changeps1 no && \
 ############################ Setup: R packages #################################
 USER root
 RUN R -e 'install.packages(c("renv"), lib="/usr/local/lib/R/site-library")' 
+RUN chmod -R a+rw /usr/local/lib/R/site-library
 USER ${NB_USER}
 
 # copy renv information from local directory
